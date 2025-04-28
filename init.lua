@@ -193,7 +193,10 @@ vim.keymap.set('n', '<C-p>', '<cmd>Telescope find_files<CR>', { desc = 'Find Fil
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
-
+vim.keymap.set('i', '<C-h>', '<Left>')
+vim.keymap.set('i', '<C-l>', '<Right>')
+vim.keymap.set('i', '<C-j>', '<Down>')
+vim.keymap.set('i', '<C-k>', '<Up>')
 -- TIP: Disable arrow keys in normal mode
 -- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
 -- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
