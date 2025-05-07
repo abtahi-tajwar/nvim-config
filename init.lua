@@ -285,7 +285,17 @@ require('lazy').setup({
       }
     end,
   },
-
+  {
+    'evanleck/vim-svelte',
+    ft = { 'svelte' },
+  },
+  {
+    'mattn/emmet-vim',
+    ft = { 'html', 'css', 'javascript', 'typescriptreact', 'svelte' },
+    init = function()
+      vim.g.user_emmet_leader_key = '<C-e>' -- Ctrl+E to trigger
+    end,
+  },
   -- End Custom added plugins
   -- Alternatively, use `config = function() ... end` for full control over the configuration.
   -- If you prefer to call `setup` explicitly, use:
@@ -388,6 +398,28 @@ require('lazy').setup({
   -- you do for a plugin at the top level, you can do for a dependency.
   --
   -- Use the `dependencies` key to specify the dependencies of a particular plugin
+  {
+    'hrsh7th/nvim-cmp', -- if not already added via blink.cmp
+    dependencies = {
+      { 'roobert/tailwindcss-colorizer-cmp.nvim', opts = {} },
+    },
+    config = function()
+      local format = require('tailwindcss-colorizer-cmp').formatter
+      local cmp = require 'cmp'
+      cmp.setup {
+        formatting = {
+          format = format,
+        },
+      }
+    end,
+  },
+
+  {
+    'windwp/nvim-ts-autotag',
+    opts = {
+      filetypes = { 'html', 'xml', 'svelte', 'typescriptreact', 'javascriptreact' },
+    },
+  },
 
   { -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
@@ -732,6 +764,8 @@ require('lazy').setup({
         tsserver = {},
         eslint = {},
         clangd = {},
+        html = {},
+        svelte = {},
       }
 
       -- Ensure the servers and tools above are installed
@@ -750,6 +784,11 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+        'svelte',
+        'query',
+        'vim',
+        'vimdoc',
+        'svelte',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -802,6 +841,7 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
+        svelte = { 'prettier' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
