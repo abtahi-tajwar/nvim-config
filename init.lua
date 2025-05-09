@@ -166,6 +166,10 @@ vim.opt.scrolloff = 10
 -- instead raise a dialog asking if you wish to save the current file(s)
 -- See `:help 'confirm'`
 vim.opt.confirm = true
+vim.opt.tabstop = 2 -- A tab is 2 spaces
+vim.opt.shiftwidth = 2 -- Indents are 2 spaces
+vim.opt.softtabstop = 2 -- Insert mode tab behaves like 2 spaces
+vim.opt.expandtab = true -- Convert tabs to spaces
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -766,6 +770,9 @@ require('lazy').setup({
         clangd = {},
         html = {},
         svelte = {},
+        tailwindcss = {
+          filetypes = { 'html', 'css', 'scss', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'svelte' },
+        },
       }
 
       -- Ensure the servers and tools above are installed
