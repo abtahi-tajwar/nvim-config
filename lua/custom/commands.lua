@@ -72,3 +72,9 @@ vim.api.nvim_create_user_command('ScaffoldReduxBuilder', function(opts)
   }
   vim.api.nvim_put(lines, 'l', true, true)
 end, { nargs = 1, desc = 'Scaffold Redux Builder cases' })
+
+vim.api.nvim_create_user_command('TermHere', function()
+  local dir = vim.fn.expand '%:p:h'
+  vim.cmd('lcd ' .. dir)
+  vim.cmd 'split | terminal'
+end, { desc = "Open terminal in current file's directory" })

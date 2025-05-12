@@ -215,6 +215,9 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 vim.keymap.set('n', 'f', 'f', { remap = true })
+vim.keymap.set('n', '<leader>tt', function()
+  vim.cmd 'TermHere'
+end, { desc = '[T]erminal in file dir' })
 
 -- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
 -- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
@@ -279,6 +282,14 @@ require('lazy').setup({
   -- Use `opts = {}` to automatically pass options to a plugin's `setup()` function, forcing the plugin to be loaded.
   --
   -- Custom added plugins
+  {
+    'numToStr/Comment.nvim',
+    event = 'VeryLazy',
+    opts = {}, -- Uses default config
+    config = function()
+      require('Comment').setup()
+    end,
+  },
   {
     'windwp/nvim-autopairs',
     event = 'InsertEnter',
