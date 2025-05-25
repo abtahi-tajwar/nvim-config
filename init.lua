@@ -542,6 +542,16 @@ require('lazy').setup({
 
   -- LSP Plugins
   {
+    'Hoffs/omnisharp-extended-lsp.nvim',
+    lazy = true,
+  },
+  {
+    'rafamadriz/friendly-snippets',
+    config = function()
+      require('luasnip.loaders.from_vscode').lazy_load()
+    end,
+  },
+  {
     -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
     -- used for completion, annotations and signatures of Neovim apis
     'folke/lazydev.nvim',
@@ -784,6 +794,21 @@ require('lazy').setup({
         tailwindcss = {
           filetypes = { 'html', 'css', 'scss', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'svelte' },
         },
+        jsonls = {},
+        omnisharp = {
+          enable_editorconfig_support = true,
+          enable_roslyn_analyzers = true,
+          organize_imports_on_format = true,
+          enable_import_completion = true,
+          sdk_include_prereleases = true,
+          analyze_open_documents_only = false,
+          handlers = {
+            ['textDocument/definition'] = require('omnisharp_extended').definition_handler,
+            ['textDocument/typeDefinition'] = require('omnisharp_extended').type_definition_handler,
+            ['textDocument/references'] = require('omnisharp_extended').references_handler,
+            ['textDocument/implementation'] = require('omnisharp_extended').implementation_handler,
+          },
+        },
       }
 
       -- Ensure the servers and tools above are installed
@@ -807,6 +832,8 @@ require('lazy').setup({
         'vim',
         'vimdoc',
         'svelte',
+        'omnisharp',
+        'c_sharp',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -860,11 +887,20 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         svelte = { 'prettier' },
+        cs = { 'csharpier' }, -- OR 'dotnet_format'
+        json = { 'prettier' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         -- javascript = { "prettierd", "prettier", stop_after_first = true },
+      },
+      formatters = {
+        csharpier = {
+          command = 'csharpier',
+          args = { '--write-stdout' },
+          stdin = true,
+        },
       },
     },
   },
